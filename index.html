@@ -65,78 +65,90 @@
     <article id="post-linux" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/23/linux/" class="article-date">
-  <time datetime="2019-01-23T06:41:26.523Z" itemprop="datePublished">2019-01-23</time>
+  <time datetime="2019-01-23T07:08:52.000Z" itemprop="datePublished">2019-01-23</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/23/linux/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="linux命令"><a href="#linux命令" class="headerlink" title="linux命令"></a>linux命令</h1><ul>
 <li>创建文件: </li>
 </ul>
-<blockquote>
-<p><code>touch ~/testFile</code></p>
-</blockquote>
+<p>touch ~/testFile</p>
+<ul>
+<li><strong>mkdir</strong>(make directories)</li>
+</ul>
+<p>建立目录 </p>
+<p>mkdir [-p][–help][–version][-m &lt;目录属性&gt;][目录名称]</p>
 <ul>
 <li><p><strong>netstat</strong> </p>
-<blockquote>
-<p>   netstat 命令用于显示各种网络相关信息，如网络连接, 路由表, 接<br>口状态等等。<br>列出所有处于监听状态的tcp端口：<code>netstat -lt</code><br>查看所有的端口信息, 包括 PID 和进程名称： <code>netstat -tulpn</code></p>
-</blockquote>
+<p>netstat 命令用于显示各种网络相关信息，如网络连接, 路由表, 接 口状态等等。</p>
+<p>列出所有处于监听状态的tcp端口：<code>netstat -lt</code></p>
+<p>查看所有的端口信息, 包括 PID 和进程名称： <code>netstat -tulpn</code></p>
 </li>
 <li><p><strong>ps</strong> </p>
-<blockquote>
-<p>   过滤得到当前系统中的 ssh 进程信息：<code>ps -aux | grep &#39;ssh&#39;</code></p>
-</blockquote>
+<p>过滤得到当前系统中的 ssh 进程信息：<code>ps -aux | grep &#39;ssh&#39;</code></p>
 </li>
 </ul>
 <ul>
 <li><strong>如何动态显示一个不停增加内容的文件</strong></li>
 </ul>
-<blockquote>
-<p>使用<strong>tail</strong> -f可实时追踪一个或多个文档的所有更新，这个功能在调试程序时非常好用：<br>  <code>tail -f /var/log/mail.log /var/log/apache/error_log</code></p>
-</blockquote>
+<p>使用<strong>tail</strong> -f可实时追踪一个或多个文档的所有更新，这个功能在调试程序时非常好用：</p>
+<p><code>tail -f /var/log/mail.log /var/log/apache/error_log</code></p>
 <ul>
-<li><p>查看文件/目录占用磁盘大小:<code>du -sh filename</code>，</p>
-<blockquote>
-<p>解释：<br>-s，表示只列出目录本身的数据。<br>-h，系统自动调节单位。</p>
-</blockquote>
-</li>
-<li><p><strong>ln</strong> </p>
-<blockquote>
-<p>源文件或目录 目标文件或目录为某个文件在另外一个位置建立一个同步的链接，当我们需要在不同的目录用到相同的文件时，不需要每个目录下都存放相同的文件，只需要在某个固定的目录上放上该文件，然后在其他目录用ln命令链接过去就行，不必重复占用磁盘空间</p>
-</blockquote>
-<p>  ln -s ~/Downloads/apache /usr/local(把apache软链接到local目录下面)</p>
-</li>
+<li>查看文件/目录占用磁盘大小:</li>
 </ul>
+<p><code>du -sh filename</code>，</p>
+<p>   解释：</p>
+<p>-s，表示只列出目录本身的数据。</p>
+<p>-h，系统自动调节单位。</p>
 <ul>
-<li><strong>rpm</strong><blockquote>
-<p><code>rpm -qa|grep java</code>     （列出本机已安装的java，没有则没空）</p>
-<p><code>rpm -e --nodeps</code> 文件名（上一步查到的文件名，一个一个复制过来卸载就好。）</p>
-</blockquote>
-</li>
+<li><strong>ln</strong> </li>
 </ul>
+<p>  源文件或目录 目标文件或目录为某个文件在另外一个位置建立一个同步的链接，当我们需要在不同的目录用到相同的文件时，不需要每个目录下都存放相同的文件，只需要在某个固定的目录上放上该文件，然后在其他目录用ln命令链接过去就行，不必重复占用磁盘空间</p>
+<p> ln -s ~/Downloads/apache /usr/local`(把apache软链接到local目录下面)</p>
 <ul>
-<li><strong>free </strong>[-bkmotV][-s &lt;间隔秒数&gt;]<blockquote>
+<li><strong>rpm</strong></li>
+</ul>
+<p>rpm -qa|grep java     （列出本机已安装的java，没有则没空）</p>
+<p>rpm -e –nodeps 文件名（上一步查到的文件名，一个一个复制过来卸载就好。）</p>
+<ul>
+<li><p><strong>free </strong>[-bkmotV][-s &lt;间隔秒数&gt;]</p>
 <p>free指令会显示内存的使用情况，包括实体内存，虚拟的交换文件内存，共享内存区段，以及系统核心使用的缓冲区等。</p>
-<p>   -b 　以Byte为单位显示内存使用情况。<br>   -k 　以KB为单位显示内存使用情况。<br>   -m 　以MB为单位显示内存使用情况。<br>   -o 　不显示缓冲区调节列。<br>   -s&lt;间隔秒数　持续观察内存使用状况。<br>   -t 　显示内存总和列。<br>   -V 　显示版本信息。</p>
-</blockquote>
 </li>
 </ul>
-<blockquote>
-<p><code>free</code> //以KB为单位，显式系统内存使用情况</p>
-<p><code>free -ml -s 1</code> //每秒以M为单位，显式系统内存详细使用情况。</p>
-<p><code>free -c 4 -s 2</code>  //为KB为单位，每2秒显式系统内存使用情况，一共显示4次</p>
-</blockquote>
+<p>-b 　以Byte为单位显示内存使用情况。</p>
+<p>-k 　以KB为单位显示内存使用情况。</p>
+<p>-m 　以MB为单位显示内存使用情况。</p>
+<p>-o 　不显示缓冲区调节列。</p>
+<p>-s&lt;间隔秒数　持续观察内存使用状况。</p>
+<p>-t 　显示内存总和列。</p>
+<p>-V 　显示版本信息。</p>
+<p>free //以KB为单位，显式系统内存使用情况</p>
+<p>free -ml -s 1 //每秒以M为单位，显式系统内存详细使用情况。</p>
+<p>free -c 4 -s 2  //为KB为单位，每2秒显式系统内存使用情况，一共显示4次</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/linux/" data-id="cjr8tm3z30000ggyqcdynpcdt" class="article-share-link">Share</a>
+      <a data-url="bandiaozi250.cn/2019/01/23/linux/" data-id="cjr8u85t30001lkyq64mje4ue" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
     </footer>
   </div>
   
@@ -153,9 +165,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/linux/" style="font-size: 10px;">linux</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -174,7 +200,7 @@
       <ul>
         
           <li>
-            <a href="/2019/01/23/linux/">(no title)</a>
+            <a href="/2019/01/23/linux/">Hello World</a>
           </li>
         
       </ul>
