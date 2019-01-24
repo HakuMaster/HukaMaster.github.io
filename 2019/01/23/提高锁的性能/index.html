@@ -3,15 +3,24 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>天涯t何处不相逢</title>
+  <title>有助于提高&#34;锁&#34;性能的几点建议 | 天涯t何处不相逢</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="天涯t何处不相逢">
-<meta property="og:url" content="bandiaozi250.cn/index.html">
+  <meta name="description" content="有助于提高”锁”性能的几点建议  减小锁持有的时间 比如100个人去银行办理业务，要填一百张表，但是只有一支笔，那么很显然，每个人用笔的时间越短，效率也就月高：看代码：  / othercode1和othercode2很耗时间,里面没有涉及资源同步,只有mutexMethod方法要对资源同步, 所有优化代码让持有锁时间尽量短  /  public synchronized void syncMet">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有助于提高&quot;锁&quot;性能的几点建议">
+<meta property="og:url" content="bandiaozi250.cn/2019/01/23/提高锁的性能/index.html">
 <meta property="og:site_name" content="天涯t何处不相逢">
+<meta property="og:description" content="有助于提高”锁”性能的几点建议  减小锁持有的时间 比如100个人去银行办理业务，要填一百张表，但是只有一支笔，那么很显然，每个人用笔的时间越短，效率也就月高：看代码：  / othercode1和othercode2很耗时间,里面没有涉及资源同步,只有mutexMethod方法要对资源同步, 所有优化代码让持有锁时间尽量短  /  public synchronized void syncMet">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/PcObPj6.png">
+<meta property="og:image" content="https://i.imgur.com/m0VE35n.png">
+<meta property="og:image" content="https://i.imgur.com/5GVptJJ.png">
+<meta property="og:updated_time" content="2019-01-24T01:27:43.180Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="天涯t何处不相逢">
+<meta name="twitter:title" content="有助于提高&quot;锁&quot;性能的几点建议">
+<meta name="twitter:description" content="有助于提高”锁”性能的几点建议  减小锁持有的时间 比如100个人去银行办理业务，要填一百张表，但是只有一支笔，那么很显然，每个人用笔的时间越短，效率也就月高：看代码：  / othercode1和othercode2很耗时间,里面没有涉及资源同步,只有mutexMethod方法要对资源同步, 所有优化代码让持有锁时间尽量短  /  public synchronized void syncMet">
+<meta name="twitter:image" content="https://i.imgur.com/PcObPj6.png">
   
     <link rel="alternate" href="/atom.xml" title="天涯t何处不相逢" type="application/atom+xml">
   
@@ -60,9 +69,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-提高锁的性能" class="article article-type-post" itemscope="" itemprop="blogPost">
+        <section id="main"><article id="post-提高锁的性能" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/23/提高锁的性能/" class="article-date">
   <time datetime="2019-01-23T09:45:15.000Z" itemprop="datePublished">2019-01-23</time>
@@ -75,8 +82,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/23/提高锁的性能/">有助于提高&#34;锁&#34;性能的几点建议</a>
+    <h1 class="article-title" itemprop="name">
+      有助于提高&#34;锁&#34;性能的几点建议
     </h1>
   
 
@@ -348,234 +355,19 @@ public synchronized StringBuffer append(String str) {
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-数据库去重" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/23/数据库去重/" class="article-date">
-  <time datetime="2019-01-23T09:45:15.000Z" itemprop="datePublished">2019-01-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/23/数据库去重/">删除数据库重复记录</a>
-    </h1>
+    <a href="/2019/01/23/数据库去重/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">删除数据库重复记录</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在几千条记录里,存在着些相同的记录,如何能用SQL语句,删除掉重复的                              </p>
-<ol>
-<li>查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断<br>select * from people where peopleId in (select  peopleId  from  people  group  by  peopleId  having  count(peopleId) &gt; 1)</li>
-</ol>
-<ol start="2">
-<li><p>删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录<br>delete from people<br>where peopleId  in (select  peopleId  from people  group  by  peopleId   having count(peopleId) &gt; 1)<br>and rowid not in (select min(rowid) from  people  group by peopleId  having count(peopleId )&gt;1)     </p>
-</li>
-<li><p>查找表中多余的重复记录（多个字段）<br>select <em> from vitae a<br>where (a.peopleId,a.seq) in  (select peopleId,seq from vitae group by peopleId,seq  having count(</em>) &gt; 1)</p>
-</li>
-<li><p>删除表中多余的重复记录（多个字段），只留有rowid最小的记录<br>delete from vitae a<br>where (a.peopleId,a.seq) in  (select peopleId,seq from vitae group by peopleId,seq having count(<em>) &gt; 1)<br>and rowid not in (select min(rowid) from vitae group by peopleId,seq having count(</em>)&gt;1)                 </p>
-</li>
-<li><p>查找表中多余的重复记录（多个字段），不包含rowid最小的记录<br>select <em> from vitae a<br>where (a.peopleId,a.seq) in  (select peopleId,seq from vitae group by peopleId,seq having count(</em>) &gt; 1)<br>and rowid not in (select min(rowid) from vitae group by peopleId,seq having count(*)&gt;1)         </p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/数据库去重/" data-id="cjr9xxl6c0005efyqfvdcvqfh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-列表去重" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/23/列表去重/" class="article-date">
-  <time datetime="2019-01-23T09:30:49.000Z" itemprop="datePublished">2019-01-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/23/列表去重/">列表去重</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>  对列表的去重处理，Java 8 在 Stream 接口上提供了类似于 SQL 语句那样的 distinct() 方法，不过它也只能基于对象整体比较来去重，即通过 equals/hashCode 方法。distinct 方法的功效与以往的 new ArrayList(new HashSet(books)) 差不多。用起来是</p>
-<pre><code>List&lt;Book&gt; unique = book.stream().distinct().collect(Collectors.toList())
-</code></pre><p>  并且这种去重方式需要在模型类中同时实现 equals 和 hashCode 方法。</p>
-<p>  回到实际项目中来，我们很多时候的需求是要根据对象的某个属性来去重。比如接下来的一个实例，一个 books 列表中存在 ID 一样，name 却不同的 book, 我们认为这是重复的，所以需要根据 book 的 id 属性对行去重。在 collect 的时候用到的方法是 collectinAndThen(…), 下面是简单代码:</p>
-<pre><code>/**
-* @author ll
-* @time 2018/2/9
-*/
-public class Deduplication {
-   public static void main(String[] args) {
-       List&lt;Bookbooks = Arrays.asList(
-       new Book(12, &quot;Sun Java&quot;),
-            new Book(12, &quot;Oracle Java&quot;),
-            new Book(15, &quot;Scala&quot;)
-    );
-    List&lt;Book&gt; unique = books.stream().collect(
-            Collectors.collectingAndThen(Collectors.toCollection(
-                    () -&gt; new TreeSet&lt;&gt;(Comparator.comparing(o -&gt; o.id))), ArrayList::new)
-    );
-    unique.forEach(book -&gt; System.out.printf(&quot;book[id: %s, name: %s]\n&quot;, book.id, book.name));
-}
-}
-
-class Book {
-public final Integer id;
-public final String name;
-
-public Book(Integer id, String name) {
-    this.id = id;
-    this.name = name;
-}
-}
-</code></pre><p>  执行后打印出</p>
-<pre><code>book[id: 12, name: Sun Java]
-book[id: 15, name: Scala]
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/列表去重/" data-id="cjr9xxl620002efyqxnshj52j" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-linux" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/23/linux/" class="article-date">
-  <time datetime="2019-01-23T07:08:52.000Z" itemprop="datePublished">2019-01-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/23/linux/">linux常用命令</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>创建文件: </p>
-<p><code>touch ~/testFile</code></p>
-</li>
-</ul>
-<ul>
-<li><p><strong>mkdir</strong>(make directories)</p>
-<p>建立目录 </p>
-<p><code>mkdir [-p][--help][--version][-m &lt;目录属性&gt;][目录名称]</code></p>
-</li>
-</ul>
-<ul>
-<li><p><strong>netstat</strong> </p>
-<p>netstat 命令用于显示各种网络相关信息，如网络连接, 路由表, 接 口状态等等。</p>
-<p>列出所有处于监听状态的tcp端口：<code>netstat -lt</code></p>
-<p>查看所有的端口信息, 包括 PID 和进程名称： <code>netstat -tulpn</code></p>
-</li>
-<li><p><strong>ps</strong> </p>
-<p>过滤得到当前系统中的 ssh 进程信息：<code>ps -aux | grep &#39;ssh&#39;</code></p>
-</li>
-</ul>
-<ul>
-<li><p><strong>如何动态显示一个不停增加内容的文件</strong></p>
-<p>使用<strong>tail</strong> -f可实时追踪一个或多个文档的所有更新，这个功能在调试程序时非常好用：</p>
-<p><code>tail -f /var/log/mail.log /var/log/apache/error_log</code></p>
-</li>
-</ul>
-<ul>
-<li><p>查看文件/目录占用磁盘大小:</p>
-<p><code>du -sh filename</code>，</p>
-<p>-s，表示只列出目录本身的数据。</p>
-<p>-h，系统自动调节单位。</p>
-</li>
-</ul>
-<ul>
-<li><p><strong>ln</strong> </p>
-<p>源文件或目录 目标文件或目录为某个文件在另外一个位置建立一个同步的链接，当我们需要在不同的目录用到相同的文件时，不需要每个目录下都存放相同的文件，只需要在某个固定的目录上放上该文件，然后在其他目录用ln命令链接过去就行，不必重复占用磁盘空间</p>
-<p><code>ln -s ~/Downloads/apache /usr/local`</code>(把apache软链接到local目录下面)</p>
-</li>
-</ul>
-<ul>
-<li><p><strong>rpm</strong></p>
-<p><code>rpm -qa|grep java</code>     （列出本机已安装的java，没有则没空）</p>
-<p><code>rpm -e --nodeps 文件名</code>（上一步查到的文件名，一个一个复制过来卸载就好。）</p>
-</li>
-</ul>
-<ul>
-<li><p><strong>free </strong>[-bkmotV][-s &lt;间隔秒数&gt;]</p>
-<p>free指令会显示内存的使用情况，包括实体内存，虚拟的交换文件内存，共享内存区段，以及系统核心使用的缓冲区等。</p>
-<p>-b 　以Byte为单位显示内存使用情况。</p>
-<p>-k 　以KB为单位显示内存使用情况。</p>
-<p>-m 　以MB为单位显示内存使用情况。</p>
-<p>-o 　不显示缓冲区调节列。</p>
-<p>-s&lt;间隔秒数　持续观察内存使用状况。</p>
-<p>-t 　显示内存总和列。</p>
-<p>-V 　显示版本信息。</p>
-<p>free //以KB为单位，显式系统内存使用情况</p>
-<p><code>free -ml -s 1</code> //每秒以M为单位，显式系统内存详细使用情况。</p>
-<p><code>free -c 4 -s 2</code>  //为KB为单位，每2秒显式系统内存使用情况，一共显示4次</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/linux/" data-id="cjr9xxl600001efyqx90v3149" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 </section>
         

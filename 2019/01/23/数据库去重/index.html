@@ -3,20 +3,20 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>列表去重 | 天涯t何处不相逢</title>
+  <title>删除数据库重复记录 | 天涯t何处不相逢</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="对列表的去重处理，Java 8 在 Stream 接口上提供了类似于 SQL 语句那样的 distinct() 方法，不过它也只能基于对象整体比较来去重，即通过 equals/hashCode 方法。distinct 方法的功效与以往的 new ArrayList(new HashSet(books)) 差不多。用起来是 List&amp;lt;Book&amp;gt; unique = book.strea">
-<meta name="keywords" content="java">
+  <meta name="description" content="在几千条记录里,存在着些相同的记录,如何能用SQL语句,删除掉重复的                                查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断select * from people where peopleId in (select  peopleId  from  people  group  by  peopleId  havin">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="列表去重">
-<meta property="og:url" content="bandiaozi250.cn/2019/01/23/列表去重/index.html">
+<meta property="og:title" content="删除数据库重复记录">
+<meta property="og:url" content="bandiaozi250.cn/2019/01/23/数据库去重/index.html">
 <meta property="og:site_name" content="天涯t何处不相逢">
-<meta property="og:description" content="对列表的去重处理，Java 8 在 Stream 接口上提供了类似于 SQL 语句那样的 distinct() 方法，不过它也只能基于对象整体比较来去重，即通过 equals/hashCode 方法。distinct 方法的功效与以往的 new ArrayList(new HashSet(books)) 差不多。用起来是 List&amp;lt;Book&amp;gt; unique = book.strea">
+<meta property="og:description" content="在几千条记录里,存在着些相同的记录,如何能用SQL语句,删除掉重复的                                查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断select * from people where peopleId in (select  peopleId  from  people  group  by  peopleId  havin">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-23T09:35:24.685Z">
+<meta property="og:updated_time" content="2019-01-24T01:27:38.115Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="列表去重">
-<meta name="twitter:description" content="对列表的去重处理，Java 8 在 Stream 接口上提供了类似于 SQL 语句那样的 distinct() 方法，不过它也只能基于对象整体比较来去重，即通过 equals/hashCode 方法。distinct 方法的功效与以往的 new ArrayList(new HashSet(books)) 差不多。用起来是 List&amp;lt;Book&amp;gt; unique = book.strea">
+<meta name="twitter:title" content="删除数据库重复记录">
+<meta name="twitter:description" content="在几千条记录里,存在着些相同的记录,如何能用SQL语句,删除掉重复的                                查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断select * from people where peopleId in (select  peopleId  from  people  group  by  peopleId  havin">
   
     <link rel="alternate" href="/atom.xml" title="天涯t何处不相逢" type="application/atom+xml">
   
@@ -65,10 +65,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-列表去重" class="article article-type-post" itemscope="" itemprop="blogPost">
+        <section id="main"><article id="post-数据库去重" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/01/23/列表去重/" class="article-date">
-  <time datetime="2019-01-23T09:30:49.000Z" itemprop="datePublished">2019-01-23</time>
+    <a href="/2019/01/23/数据库去重/" class="article-date">
+  <time datetime="2019-01-23T09:45:15.000Z" itemprop="datePublished">2019-01-23</time>
 </a>
     
   </div>
@@ -79,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      列表去重
+      删除数据库重复记录
     </h1>
   
 
@@ -87,49 +87,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>  对列表的去重处理，Java 8 在 Stream 接口上提供了类似于 SQL 语句那样的 distinct() 方法，不过它也只能基于对象整体比较来去重，即通过 equals/hashCode 方法。distinct 方法的功效与以往的 new ArrayList(new HashSet(books)) 差不多。用起来是</p>
-<pre><code>List&lt;Book&gt; unique = book.stream().distinct().collect(Collectors.toList())
-</code></pre><p>  并且这种去重方式需要在模型类中同时实现 equals 和 hashCode 方法。</p>
-<p>  回到实际项目中来，我们很多时候的需求是要根据对象的某个属性来去重。比如接下来的一个实例，一个 books 列表中存在 ID 一样，name 却不同的 book, 我们认为这是重复的，所以需要根据 book 的 id 属性对行去重。在 collect 的时候用到的方法是 collectinAndThen(…), 下面是简单代码:</p>
-<pre><code>/**
-* @author ll
-* @time 2018/2/9
-*/
-public class Deduplication {
-   public static void main(String[] args) {
-       List&lt;Bookbooks = Arrays.asList(
-       new Book(12, &quot;Sun Java&quot;),
-            new Book(12, &quot;Oracle Java&quot;),
-            new Book(15, &quot;Scala&quot;)
-    );
-    List&lt;Book&gt; unique = books.stream().collect(
-            Collectors.collectingAndThen(Collectors.toCollection(
-                    () -&gt; new TreeSet&lt;&gt;(Comparator.comparing(o -&gt; o.id))), ArrayList::new)
-    );
-    unique.forEach(book -&gt; System.out.printf(&quot;book[id: %s, name: %s]\n&quot;, book.id, book.name));
-}
-}
+        <p>在几千条记录里,存在着些相同的记录,如何能用SQL语句,删除掉重复的                              </p>
+<ol>
+<li>查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断<br>select * from people where peopleId in (select  peopleId  from  people  group  by  peopleId  having  count(peopleId) &gt; 1)</li>
+</ol>
+<ol start="2">
+<li><p>删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录<br>delete from people<br>where peopleId  in (select  peopleId  from people  group  by  peopleId   having count(peopleId) &gt; 1)<br>and rowid not in (select min(rowid) from  people  group by peopleId  having count(peopleId )&gt;1)     </p>
+</li>
+<li><p>查找表中多余的重复记录（多个字段）<br>select <em> from vitae a<br>where (a.peopleId,a.seq) in  (select peopleId,seq from vitae group by peopleId,seq  having count(</em>) &gt; 1)</p>
+</li>
+<li><p>删除表中多余的重复记录（多个字段），只留有rowid最小的记录<br>delete from vitae a<br>where (a.peopleId,a.seq) in  (select peopleId,seq from vitae group by peopleId,seq having count(<em>) &gt; 1)<br>and rowid not in (select min(rowid) from vitae group by peopleId,seq having count(</em>)&gt;1)                 </p>
+</li>
+<li><p>查找表中多余的重复记录（多个字段），不包含rowid最小的记录<br>select <em> from vitae a<br>where (a.peopleId,a.seq) in  (select peopleId,seq from vitae group by peopleId,seq having count(</em>) &gt; 1)<br>and rowid not in (select min(rowid) from vitae group by peopleId,seq having count(*)&gt;1)         </p>
+</li>
+</ol>
 
-class Book {
-public final Integer id;
-public final String name;
-
-public Book(Integer id, String name) {
-    this.id = id;
-    this.name = name;
-}
-}
-</code></pre><p>  执行后打印出</p>
-<pre><code>book[id: 12, name: Sun Java]
-book[id: 15, name: Scala]
-</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/列表去重/" data-id="cjr9xxl620002efyqxnshj52j" class="article-share-link">Share</a>
+      <a data-url="bandiaozi250.cn/2019/01/23/数据库去重/" data-id="cjr9xxl6c0005efyqfvdcvqfh" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
     </footer>
   </div>
@@ -137,19 +116,19 @@ book[id: 15, name: Scala]
     
 <nav id="article-nav">
   
-    <a href="/2019/01/23/数据库去重/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/01/23/提高锁的性能/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          删除数据库重复记录
+          有助于提高&#34;锁&#34;性能的几点建议
         
       </div>
     </a>
   
   
-    <a href="/2019/01/23/linux/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/01/23/列表去重/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">linux常用命令</div>
+      <div class="article-nav-title">列表去重</div>
     </a>
   
 </nav>
