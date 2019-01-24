@@ -130,9 +130,8 @@ public Matcher matcher(CharSequence input) {
 <p>concurrentHashMap的实现,他的内部被分为了若干个晓得hashmap,称之为段(SEGMENT),默认是16段<br>减小锁粒度会引入一个新的问题,当需要获取全局锁的时候,其消耗的资源会较多,不如concurrenthashMap的size()方法.可以看到计算size的时候需要计算全部有效的段的锁</p>
 <p> public int size() {</p>
 <pre><code>long n = sumCount();
- return ((n &lt; 0L) ? 0 :
-  (n &gt; (long)Integer.MAX_VALUE) ? Integer.MAX_VALUE :
-  (int)n);
+return ((n &lt; 0L) ? 0 :(n &gt; (long)Integer.MAX_VALUE) ? Integer.MAX_VALUE :
+(int)n);
 </code></pre><p> }</p>
 <p> final long sumCount() {</p>
 <pre><code>CounterCell[] as = counterCells; CounterCell a;
@@ -230,11 +229,7 @@ public class ReadWriteLockDemo {
 <ol start="3">
 <li><p>锁分离  </p>
 <p>已LinkedBlockingQueue为例,take函数和put函数分别实现了冲队列取和往队列加数据，虽然两个方法都对队列进项了修改，但是LinkedBlockingQueue是基于链表的所以一个操作的是头，一个是队列尾端，从理论情况下将并不冲突<br>如果使用独占锁则take和put就不能完成真正的并发，所以jdk并没有才用这种方式取而代之的是两把不同的锁分离了put和take的操作，下面看源码</p>
-<p> /*<em> Lock held by take, poll, etc </em>/<br> private final ReentrantLock takeLock = new ReentrantLock();//take函数需要持有takeLock</p>
-<p> /*<em> Wait queue for waiting takes </em>/<br> private final Condition notEmpty = takeLock.newCondition();</p>
-<p> /*<em> Lock held by put, offer, etc </em>/<br> private final ReentrantLock putLock = new ReentrantLock();//put函数需要持有putLock</p>
-<p> /*<em> Wait queue for waiting puts </em>/<br> private final Condition notFull = putLock.newCondition();</p>
-<p> public E take() throws InterruptedException {</p>
+<p> /<strong> Lock held by take, poll, etc */<br> private final ReentrantLock takeLock = new ReentrantLock();//take函数需要持有takeLock<br> /</strong> Wait queue for waiting takes <em>/<br> private final Condition notEmpty = takeLock.newCondition();<br> /** Lock held by put, offer, etc </em>/<br> private final ReentrantLock putLock = new ReentrantLock();//put函数需要持有putLock<br> /*<em> Wait queue for waiting puts </em>/<br> private final Condition notFull = putLock.newCondition();<br> public E take() throws InterruptedException {</p>
 <pre><code>E x;
 int c = -1;
 final AtomicInteger count = this.count;
@@ -293,8 +288,9 @@ return x;
 </code></pre><ol start="4">
 <li><p>锁粗化</p>
 <p>虚拟机在遇到一连串地对同一锁不断进行请求和释放的操作时,便会把所有的锁操作整合成对锁的一次请求,从而减小对锁的请求同步次数,这个操作叫锁粗话,比如</p>
-<p> for (int i=0;i&lt;20;i++){<br>  synchronized (lock){<br>  }<br> }</p>
-<p> //优化后<br> synchronized (lock){<br> for (int i=0;i&lt;20;i++){<br>  }<br> }<br>注意:性能优化就是根据运行时的真实情况对各个资源点进行权衡折中的过程,锁粗话的思想和减少锁持有时间是相反的,但是在不同的场合,他们的效果并不相同,所以大家要根据实际情况,进行权衡</p>
+<p> for (int i=0;i&lt;20;i++){<br> synchronized (lock){<br> }<br> }</p>
+<p> //优化后<br> synchronized (lock){<br> for (int i=0;i&lt;20;i++){<br> }<br> }</p>
+<p><strong>注意</strong>:性能优化就是根据运行时的真实情况对各个资源点进行权衡折中的过程,锁粗话的思想和减少锁持有时间是相反的,但是在不同的场合,他们的效果并不相同,所以大家要根据实际情况,进行权衡</p>
 </li>
 <li><p>java虚拟机对锁优化所做的努力</p>
 <p><strong>5.1 锁偏向</strong></p>
@@ -352,7 +348,7 @@ public synchronized StringBuffer append(String str) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/提高锁的性能/" data-id="cjr9yembz0004atyqpju0c3nh" class="article-share-link">Share</a>
+      <a data-url="bandiaozi250.cn/2019/01/23/提高锁的性能/" data-id="cjr9ytge400043ryqpywrqlys" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -404,7 +400,7 @@ public synchronized StringBuffer append(String str) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/数据库去重/" data-id="cjr9yemc10005atyqquh25kin" class="article-share-link">Share</a>
+      <a data-url="bandiaozi250.cn/2019/01/23/数据库去重/" data-id="cjr9ytge600053ryqeq3c8dje" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -477,7 +473,7 @@ book[id: 15, name: Scala]
       
     </div>
     <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/列表去重/" data-id="cjr9yembw0002atyqsw1kng34" class="article-share-link">Share</a>
+      <a data-url="bandiaozi250.cn/2019/01/23/列表去重/" data-id="cjr9ytgdv00023ryqqv6wmj98" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -576,7 +572,7 @@ book[id: 15, name: Scala]
       
     </div>
     <footer class="article-footer">
-      <a data-url="bandiaozi250.cn/2019/01/23/linux/" data-id="cjr9yembu0001atyqjemobe5l" class="article-share-link">Share</a>
+      <a data-url="bandiaozi250.cn/2019/01/23/linux/" data-id="cjr9ytgds00013ryqjdmigcyl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
